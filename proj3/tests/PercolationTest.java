@@ -81,8 +81,50 @@ public class PercolationTest {
     // TODO: Using the given tests above as a template,
     //       write some more tests and delete the fail() line
     @Test
-    public void yourFirstTestHere() {
-        fail("Did you write your own tests?");
+    public void backwashTest() {
+        int N = 3;
+        Percolation p = new Percolation(N);
+        // 构造一条垂直路径，并横向连接到底部
+        p.open(0, 0);
+        p.open(1, 0);
+        p.open(2, 0); // 路径通了
+        p.open(2, 1);
+        p.open(2, 2); // 底部连通
+
+        // 此时 (2, 2) 是 FULL
+        assertThat(p.isFull(2, 2)).isTrue();
+
+        // 打开 (0, 2) 看看 (2, 2) 是否依然是 FULL（不应受回流影响）
+        // 注意：如果你的实现有回流，这里可能会出错
+        p.open(0, 2);
+        // 此时 (0, 2) 应该是 FULL，(2, 2) 依然应该是 FULL
+        assertThat(p.isFull(0, 2)).isTrue();
     }
 
+    @Test
+    public void testExceptions() {
+        Percolation p = new Percolation(5);
+        try {
+            p.open(-1, 0);
+            fail("Should have thrown IllegalArgumentException");
+        } catch (IllegalArgumentException e) {
+            // pass
+        }
+
+        try {
+            p.isFull(5, 0); // 越界
+            fail("Should have thrown IllegalArgumentException");
+        } catch (IllegalArgumentException e) {
+            // pass
+        }
+    }
+
+    @Test
+    public void testRepeatedOpen() {
+        Percolation p = new Percolation(3);
+        p.open(1, 1);
+        int countBefore = p.numberOfOpenSites();
+        p.open(1, 1); // 重复开启
+        assertThat(p.numberOfOpenSites()).isEqualTo(countBefore);
+    }
 }

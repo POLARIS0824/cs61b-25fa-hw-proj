@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:claude.com)",
+      "WebSearch",
+      "Bash(javac:*)",
+      "Bash(java -version)",
+      "Bash(java -cp \"../library-fa25/junit-platform-console-standalone-1.10.0.jar;out/test/hw05;../library-fa25/jh61b.jar;../library-fa25\" org.junit.platform.console.ConsoleLauncher:*)",
+      "Bash(java:*)",
+      "Bash(jar -tf:*)"
+    ]
+  }
+}

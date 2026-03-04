@@ -76,6 +76,10 @@ public class SpeciesListStage implements AdventureStage {
             } else {
                 user = Arrays.asList(input.toLowerCase().split(" *, *"));
             }
+//            if (user.isEmpty()) {
+//                break;
+//            }
+            // This is DOUBLE!!!
             double similarity = arraySimilarity(reference, user);
             if (similarity != 1 && reference.size() != 0) {
                 long numCorrect = Math.round(similarity * reference.size());
@@ -92,7 +96,10 @@ public class SpeciesListStage implements AdventureStage {
      *
      * Similarity is defined as when listTwo contains all the elements in listOne.
      */
-    public static int arraySimilarity(List<String> listOne, List<String> listTwo) {
+    public static double arraySimilarity(List<String> listOne, List<String> listTwo) {
+        if (listOne.isEmpty()) {
+            return 1.0;
+        }
         List<String> copy = new ArrayList<>(listOne);
         int similarObjects = 0;
         for (String o : listTwo) {
@@ -101,6 +108,6 @@ public class SpeciesListStage implements AdventureStage {
                 copy.remove(o);
             }
         }
-        return similarObjects / listOne.size();
+        return (double) similarObjects / listOne.size();
     }
 }

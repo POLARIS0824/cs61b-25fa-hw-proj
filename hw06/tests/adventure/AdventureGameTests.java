@@ -3,6 +3,8 @@ package adventure;
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdRandom;
 import helpers.CaptureSystemOutput;
+import org.junit.Assert;
+import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Named;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -13,6 +15,7 @@ import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.util.stream.Stream;
 
+import static com.google.common.truth.Truth.assertThat;
 import static com.google.common.truth.Truth.assertWithMessage;
 
 @CaptureSystemOutput
@@ -64,4 +67,19 @@ public class AdventureGameTests {
         compareOutputToExpected(stage, capture);
     }
 
+    @Test
+    public void testMysteryMax() {
+        int a = 10, b = 1;
+        int res = MachineStage.mysteryMax(a, b);
+
+        assertThat(res).isEqualTo(10);
+    }
+
+    @Test
+    public void testMysteryAdd() {
+        int a = 10, b = 5;
+        int res = MachineStage.mysteryAdd(a, b);
+
+        assertThat(res).isEqualTo(15);
+    }
 }
