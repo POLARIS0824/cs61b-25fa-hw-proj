@@ -1,6 +1,11 @@
 package main;
 
+import org.antlr.v4.runtime.tree.Tree;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.TreeMap;
 
 /**
@@ -31,6 +36,11 @@ public class TimeSeries extends TreeMap<Integer, Double> {
     public TimeSeries(TimeSeries ts, int startYear, int endYear) {
         super();
         // TODO: Fill in this constructor.
+        for (int year : ts.keySet()) {
+            if (year >= startYear && year <= endYear) {
+                this.put(year, ts.get(year));
+            }
+        }
     }
 
     /**
@@ -38,7 +48,7 @@ public class TimeSeries extends TreeMap<Integer, Double> {
      */
     public List<Integer> years() {
         // TODO: Fill in this method.
-        return null;
+        return new ArrayList<>(this.keySet());
     }
 
     /**
@@ -47,7 +57,7 @@ public class TimeSeries extends TreeMap<Integer, Double> {
      */
     public List<Double> data() {
         // TODO: Fill in this method.
-        return null;
+        return new ArrayList<>(this.values());
     }
 
     /**
@@ -61,7 +71,15 @@ public class TimeSeries extends TreeMap<Integer, Double> {
      */
     public TimeSeries plus(TimeSeries ts) {
         // TODO: Fill in this method.
-        return null;
+        TimeSeries newTS = new TimeSeries();
+        for (int year : this.keySet()) {
+            newTS.put(year, this.get(year));
+        }
+        for (int year : ts.keySet()) {
+            double data = newTS.getOrDefault(year, 0.0);
+            newTS.put(year, data + ts.get(year));
+        }
+        return newTS;
     }
 
     /**
@@ -75,7 +93,14 @@ public class TimeSeries extends TreeMap<Integer, Double> {
      */
     public TimeSeries dividedBy(TimeSeries ts) {
         // TODO: Fill in this method.
-        return null;
+        TimeSeries newTS = new TimeSeries();
+        for (int year : this.keySet()) {
+            if (!ts.containsKey(year)) {
+                throw new IllegalArgumentException();
+            }
+            newTS.put(year, this.get(year) / ts.get(year));
+        }
+        return newTS;
     }
 
     // TODO: Add any private helper methods.

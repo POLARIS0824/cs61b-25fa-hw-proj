@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.google.common.truth.Truth.assertThat;
+import static org.junit.jupiter.api.Assertions.fail;
 
 /** Unit Tests for the TimeSeries class.
  *  @author Josh Hug
@@ -59,5 +60,35 @@ public class TimeSeriesTest {
 
         assertThat(totalPopulation.years()).isEmpty();
         assertThat(totalPopulation.data()).isEmpty();
+    }
+
+    @Test
+    public void testDevideBy() {
+        TimeSeries ts1 = new TimeSeries();
+        TimeSeries ts2 = new TimeSeries();
+
+        ts1.put(1990, 10.0);
+        ts1.put(1991, 20.0);
+        ts1.put(1992, 30.0);
+        ts2.put(1990, 2.0);  // 10 / 2 = 5
+        ts2.put(1991, 4.0);  // 20 / 4 = 5
+        ts2.put(1992, 5.0);  // 30 / 5 = 6
+        ts2.put(1993, 10.0); // 这一年 ts1 没有，应该被忽略
+
+        TimeSeries res = ts1.dividedBy(ts2);
+        assertThat(res.get(1990)).isWithin(1E-10).of(5);
+        assertThat(res.get(1991)).isWithin(1E-10).of(5);
+        assertThat(res.get(1992)).isWithin(1E-10).of(6);
+        assertThat(res.containsKey(1993)).isFalse();
+
+        TimeSeries ts3 = new TimeSeries();
+        ts3.put(1990, 2.0);
+
+        try {
+            ts1.dividedBy(ts3);
+            fail("Exception expected");
+        } catch (IllegalArgumentException e) {
+            // pass
+        }
     }
 } 
