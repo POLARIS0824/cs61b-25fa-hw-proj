@@ -24,6 +24,9 @@ public class Main {
     public static final String SYNSETS_SIZE82191_FILE = PREFIX + "synsets_size82191.txt";
     public static final String HYPONYMS_SIZE82191_FILE = PREFIX +  "hyponyms_size82191.txt";
 
+    public static final String SYNSETS_FILE = PREFIX + "synsets.txt";
+    public static final String HYPONYMS_FILE = PREFIX + "hyponyms.txt";
+
 
     static {
         LoggerFactory.getLogger(Main.class).info("\033[1;38mChanging text color to white");
@@ -33,7 +36,10 @@ public class Main {
 
         hns.startUp();
         // TODO: modify HyponymsHandler
-        // hns.register("hyponyms", new HyponymsHandler());
+
+        WordNet wordNet = new WordNet(SYNSETS_FILE, HYPONYMS_FILE);
+
+        hns.register("hyponyms", new HyponymsHandler(wordNet));
 
         System.out.println("Finished server startup! Visit http://localhost:4567/ngordnet.html");
     }
