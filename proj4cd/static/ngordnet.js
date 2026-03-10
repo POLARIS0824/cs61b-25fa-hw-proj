@@ -19,7 +19,7 @@ $(function() {
     const historytext_server = host + '/historytext';
     const hyponyms_server = host + '/hyponyms';
     const hypohist_server = host + '/hypohist';
-//    const hypohisttext_server = host + '/hypohisttext';
+    const hypohisttext_server = host + '/hypohisttext';
     const commonancestors_server = host + '/ancestors';
 
     var ngordnetQueryType = "HYPONYMS";

@@ -38,8 +38,13 @@ public class Main {
         // TODO: modify HyponymsHandler
 
         WordNet wordNet = new WordNet(SYNSETS_FILE, HYPONYMS_FILE);
+        NGramMap nGramMap = new NGramMap(WORD_HISTORY_SIZE14377_FILE, YEAR_HISTORY_FILE);
 
-        hns.register("hyponyms", new HyponymsHandler(wordNet));
+        HandlerHelper helper = new HandlerHelper(wordNet, nGramMap);
+
+        hns.register("hyponyms", new HyponymsHandler(helper));
+
+        hns.register("hypohist", new HypohistHandler(helper));
 
         System.out.println("Finished server startup! Visit http://localhost:4567/ngordnet.html");
     }
