@@ -7,10 +7,10 @@ import browser.NgordnetServer;
 import java.util.List;
 
 public class HistoryTextHandler extends NgordnetQueryHandler {
-    private NGramMap map;
+    private NGramMap nGramMap;
 
     public HistoryTextHandler(NGramMap map) {
-        this.map = map;
+        this.nGramMap = map;
     }
 
     @Override
@@ -24,7 +24,7 @@ public class HistoryTextHandler extends NgordnetQueryHandler {
             String word = words.get(i);
             response.append(word)
                     .append(": ")
-                    .append((map.weightHistory(word, startYear, endYear)).toString())
+                    .append((nGramMap.weightHistory(word, startYear, endYear)).toString())
                     .append("\n");
 //                    .append(System.lineSeparator());
         }
