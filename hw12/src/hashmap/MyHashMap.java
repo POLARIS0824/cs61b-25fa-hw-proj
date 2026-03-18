@@ -229,6 +229,9 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
     public Set<K> keySet() {
         Set<K> set = new HashSet<>();
         for (int i = 0; i < buckets.length; i++) {
+            if (buckets[i] == null) {
+                continue;
+            }
             for (Node element : buckets[i]) {
                 set.add(element.key);
             }
@@ -254,9 +257,10 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
 
         Iterator<Node> iterator = buckets[index].iterator();
         while (iterator.hasNext()) {
-            if (iterator.next().key.equals(key)) {
-                V value = iterator.next().value;
-                buckets[index].remove(iterator.next());
+            Node curNode = iterator.next();
+            if (curNode.key.equals(key)) {
+                V value = curNode.value;
+                iterator.remove();
                 elements--;
                 return value;
             }
